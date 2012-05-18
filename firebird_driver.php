@@ -292,7 +292,30 @@ class CI_DB_Firebird_driver extends CI_DB {
         if ($table == '') {
             return 0;
         }
-        $query = $this->query($this->_count_string . $this->_protect_identifiers('numrows') . " FROM " . $this->_protect_identifiers($table, TRUE, NULL, FALSE));
+        $s = $this->_count_string . ' NUMROWS ' . " FROM " . $this->_protect_identifiers($table, TRUE, NULL, FALSE);
+        $query = $this->query($s);
+        if ($query->num_rows() == 0) {
+            return 0;
+        }
+        $row = $query->row();
+        return (int) $row->NUMROWS;
+    }
+
+    /**
+     * "Count All Results" query
+     *
+     * Generates a platform-specific query string that counts all records
+     * returned by an Active Record query.
+     *
+     * @param	string
+     * @return	string
+     */
+    function count_all_results($table = '') {
+        if ($table == '') {
+            return 0;
+        }
+        $s = $this->_compile_select($this->_count_string . $this->_protect_identifiers(' NUMROWS '). " FROM " . $this->_protect_identifiers($table, TRUE, NULL, FALSE));
+        $query = $this->query($s);
         if ($query->num_rows() == 0) {
             return 0;
         }
