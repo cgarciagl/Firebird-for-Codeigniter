@@ -334,9 +334,9 @@ class CI_DB_Firebird_driver extends CI_DB {
      * @return	string
      */
     function _list_tables($prefix_limit = FALSE) {
-        $sql = "SELECT RDB$RELATION_NAME FROM RDB$RELATIONS WHERE RDB$SYSTEM_FLAG = 0";
+        $sql = 'SELECT RDB$RELATION_NAME FROM RDB$RELATIONS WHERE RDB$SYSTEM_FLAG = 0';
         if ($prefix_limit !== FALSE AND $this->dbprefix != '') {
-            $sql .= " AND RDB$RElATION_NAME LIKE '" . $this->escape_like_str($this->dbprefix) . "%' " . sprintf($this->_like_escape_str, $this->_like_escape_chr);
+            $sql .= ' AND RDB$RELATION_NAME LIKE "' . $this->escape_like_str($this->dbprefix) . '%" ' . sprintf($this->_like_escape_str, $this->_like_escape_chr);
         }
         return $sql;
     }
