@@ -47,6 +47,8 @@ class CI_DB_Firebird_driver extends CI_DB {
      */
     var $_count_string = "SELECT COUNT(*) AS ";
     var $_random_keyword = ' ASC';
+    
+    var $trans_active;
 
     // database specific random keyword
     /**
@@ -165,7 +167,8 @@ class CI_DB_Firebird_driver extends CI_DB {
      */
     function _execute($sql) {
         $sql = $this->_prep_query($sql);
-        return @ibase_query($this->conn_id, $sql);
+        $res = @ibase_query(isset($this->trans_active) ? $this->trans_active : $this->conn_id, $sql);
+        return $res;
     }
 
     // --------------------------------------------------------------------
@@ -202,7 +205,13 @@ class CI_DB_Firebird_driver extends CI_DB {
         // If the $test_mode flag is set to TRUE transactions will be rolled back
         // even if the queries produce a successful result.
         $this->_trans_failure = ($test_mode === TRUE) ? TRUE : FALSE;
-        return @ibase_trans($this->conn_id);
+        
+        if (isset($this->trans_active))
+            return $this->trans_active;
+        else {
+            $this->trans_active = @ibase_trans($this->conn_id);
+            return isset($this->trans_active);
+        }
     }
 
     // --------------------------------------------------------------------
@@ -220,7 +229,9 @@ class CI_DB_Firebird_driver extends CI_DB {
         if ($this->_trans_depth > 0) {
             return TRUE;
         }
-        return @ibase_commit($this->conn_id);
+        @ibase_commit(isset($this->trans_active) ? $this->trans_active : $this->conn_id);
+        unset($this->trans_active);
+        return TRUE;
     }
 
     // --------------------------------------------------------------------
@@ -238,7 +249,9 @@ class CI_DB_Firebird_driver extends CI_DB {
         if ($this->_trans_depth > 0) {
             return TRUE;
         }
-        return @ibase_rollback($this->conn_id);
+        @ibase_rollback(isset($this->trans_active) ? $this->trans_active : $this->conn_id);
+        unset($this->trans_active);
+        return TRUE;
     }
 
     // --------------------------------------------------------------------
