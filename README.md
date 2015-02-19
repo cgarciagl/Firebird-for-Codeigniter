@@ -1,8 +1,8 @@
-# Firebird for Codeigniter
+# Firebird for Codeigniter 2.x
 
-This is a Firebird driver for Codeigniter 2.0 +
+This is a Firebird driver for Codeigniter 2.x
 
-Tested on Firebird 2.1 and Codeingniter 2.0
+Tested on Firebird 2.x and Codeingniter 2.x
 
 # Utilization mode / Modo de utilización
 
