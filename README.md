@@ -17,9 +17,9 @@ Put the files in the "system/database/drivers/firebird" folder and in the "appli
     $db['default']['dbdriver'] = "firebird";
 ```
 
-you can provide feedback in the discussion thread here:
+you can provide feedback in the forum here:
 
-http://codeigniter.com/forums/viewthread/171008/
+http://forum.codeigniter.com/
 
 Good Luck
 
