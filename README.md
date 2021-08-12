@@ -1,13 +1,3 @@
-# Deprecated
-
-Sorry, this project is deprecated and no longer mantained 😔
-
-Actually in the current versions of the framework a native driver is included, so this one is no more needed 
-
-If you still use Codeigniter 2.x and this one works for you great 👍
-
-
-
 # Firebird for Codeigniter 2.x
 
 This is a Firebird driver for Codeigniter 2.x
